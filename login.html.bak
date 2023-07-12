@@ -48,12 +48,15 @@ input{
 .button{
 	cursor:pointer;
 	transition:2s ease;
+	background:#333;
+	color:#fff;
 	
 }
 
 .button:hover{
-	background:#333;
-	color:#fff;
+	background:#fff;
+	color:#333;
+	border:1px solid #333;
 }
 .button2{
 	margin:10px;
@@ -106,7 +109,7 @@ loginForm.addEventListener('submit', async (event) => {
     const data = await response.json();
     if (response.ok) {
   alert(data.message); 
-  window.location.href = `index.html?loginSuccessful=true&objectId=${data.user._id}`;
+  window.location.href = `index.html?loginSuccessful=true&objectId=${data.objectId}`;
   }else {
       alert(data.message); // Display error message from the backend
 	  }}
