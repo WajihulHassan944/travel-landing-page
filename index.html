@@ -23,11 +23,58 @@
 	display:flex;
 }
 .icon h4{
-	margin-top:4px;
+	font-size:18px;
+	color:red;
 }.hidden {
   display: none;
 }
 
+#orderForm {
+  display: none;
+  position:fixed;
+  z-index:999;
+  top:10px;
+  left:40%;
+  padding: 20px;
+  width:350px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+#orderForm h3 {
+  margin: 0 0 10px;
+}
+
+#orderForm input[type="text"],
+#orderForm button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#orderForm input[type="text"] {
+  border: 1px solid #ccc;
+}
+
+#orderForm button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+}
+
+#orderForm button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.fa-times{
+	position:absolute;
+	top:23px;
+	right:21px;
+	color:red;
+	cursor:pointer;
+}
 </style>
     <!-- header section start here  -->
     <header class="header">
@@ -46,7 +93,7 @@
 
         <div class="icon">
            <i class="fas fa-search" id="search"></i>
-			 <i class="fas fa-user" id="loginto"></i>
+			  <i class="fas fa-user" id="loginto"></i>
 			<h4 id="nameofUser"></h4>
             <i class="fas fa-bars" id="menu-bar"></i>
         </div>
@@ -171,7 +218,7 @@ seeMoreButton.addEventListener("click", function() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
+                            <button class="orderButton">Order Now</button>
                         </div>
                     </div>
                 </div>
@@ -184,8 +231,8 @@ seeMoreButton.addEventListener("click", function() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
-                        </div>
+                            <button class="orderButton">Order Now</button>
+							</div>
                     </div>
                 </div>
                 <div class="swiper-slide box">
@@ -197,7 +244,7 @@ seeMoreButton.addEventListener("click", function() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
+						<button class="orderButton">Order Now</button>
                         </div>
                     </div>
                 </div>
@@ -210,7 +257,7 @@ seeMoreButton.addEventListener("click", function() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
+						<button class="orderButton">Order Now</button>
                         </div>
                     </div>
                 </div>
@@ -229,7 +276,8 @@ seeMoreButton.addEventListener("click", function() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
+						
+						<button class="orderButton">Order Now</button>
                         </div>
                     </div>
                 </div>
@@ -242,7 +290,7 @@ seeMoreButton.addEventListener("click", function() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
+						<button class="orderButton">Order Now</button>
                         </div>
                     </div>
                 </div>
@@ -251,11 +299,11 @@ seeMoreButton.addEventListener("click", function() {
                         <img src="images/cake1.png" alt="">
                     </div>
                     <div class="product-content">
-                        <h3>Chocolate</h3>
+                        <h3>Chocolatto</h3>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
+						<button class="orderButton">Order Now</button>
                         </div>
                     </div>
                 </div>
@@ -268,7 +316,7 @@ seeMoreButton.addEventListener("click", function() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa adipisci reiciendis assumenda.
                         </p>
                         <div class="orderNow">
-                            <button>Order Now </button>
+						<button class="orderButton">Order Now</button>
                         </div>
                     </div>
                 </div>
@@ -277,7 +325,84 @@ seeMoreButton.addEventListener("click", function() {
             <div class="swiper-pagination"></div>
         </div>
     </section>
+	
+<!-- Hidden form -->
+<div id="orderForm" style="display: none;">
+  <h3>Order Form</h3>
+  <i class="fas fa-times" id="crosssymbolone"></i>
+  <form id="orderFormSubmit">
+    <input type="text" id="itemName" disabled>
+    <input type="text" id="userName" placeholder="Your Name" required>
+    <input type="text" id="userAddress" placeholder="Your Address" required>
+    <button type="submit">Submit</button>
+  </form>
+</div>
 
+<script>
+var orderForm = document.getElementById("orderForm");
+var itemNameInput = document.getElementById("itemName");
+var userNameInput = document.getElementById("userName");
+var userAddressInput = document.getElementById("userAddress");
+var orderFormSubmit = document.getElementById("orderFormSubmit");
+
+var orderButtons = document.getElementsByClassName("orderButton");
+
+
+for (var i = 0; i < orderButtons.length; i++) {
+  orderButtons[i].addEventListener("click", function() {
+
+    var productContainer = this.closest(".swiper-slide");
+    var productName = productContainer.querySelector("h3").textContent;
+
+
+    orderForm.style.display = "block";
+  
+
+    itemNameInput.value = productName;
+  });
+}
+orderFormSubmit.addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  if (userNameInput.value === "" || userAddressInput.value === "") {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  var formData = {
+    itemName: itemNameInput.value,
+    userName: userNameInput.value,
+    userAddress: userAddressInput.value,
+    userEmail: "wajih786hassan@gmail.com"
+  };
+
+  fetch("https://backend-for-experiences.onrender.com/submit-order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(function(response) {
+    if (response.ok) {
+      alert("Order submitted successfully.");
+    } else {
+      alert("Error submitting order.");
+    }
+  })
+  .catch(function(error) {
+    alert("Error submitting order.");
+    console.error(error);
+  });
+});
+  
+  
+  var crosssymbolone = document.getElementById("crosssymbolone");
+  crosssymbolone.addEventListener("click", function() {
+     orderForm.style.display = "none";
+  
+  })
+</script>
     <!-- product section end here  -->
 
     <!-- blogs section start here  -->
